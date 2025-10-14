@@ -22,7 +22,7 @@ const database = [
 const userModel = {
 
   /* FIX ME (types) 😭 */
-  findOne: (email: any) => {
+  findOne: (email: string) => {
     const user = database.find((user) => user.email === email);
     if (user) {
       return user;
@@ -30,7 +30,7 @@ const userModel = {
     throw new Error(`Couldn't find user with email: ${email}`);
   },
   /* FIX ME (types) 😭 */
-  findById: (id: any) => {
+  findById: (id: number) => {
     const user = database.find((user) => user.id === id);
     if (user) {
       return user;
@@ -39,4 +39,12 @@ const userModel = {
   },
 };
 
-export { database, userModel };
+
+interface User extends Express.User {
+  id?: number,
+  name?: string,
+  email?: string,
+  password?: string,
+}
+
+export { database, userModel, User };
