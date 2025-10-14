@@ -11,6 +11,8 @@ const localStrategy = new LocalStrategy(
   },
   (email, password, done) => {
     const user = getUserByEmailIdAndPassword(email, password);
+
+    
     return user
       ? done(null, user)
       : done(null, false, {
