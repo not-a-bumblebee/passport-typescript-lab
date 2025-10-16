@@ -1,10 +1,10 @@
 import express from "express";
 const router = express.Router();
-import { ensureAuthenticated } from "../middleware/checkAuth";
+import { ensureAuthenticated, isAdmin } from "../middleware/checkAuth";
 
 router.get("/", (req, res) => {
   console.log(req.session);
-  
+
   res.send("welcome");
 });
 
@@ -13,5 +13,34 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
     user: req.user,
   });
 });
+
+router.get("/admin", ensureAuthenticated, isAdmin, (req, res) => {
+  console.log("ADMIN");
+  console.log(req.user);
+
+  let sesh = []
+
+  if (req.sessionStore) {
+    req.sessionStore
+    console.log("BOWSER")
+    let a = req.sessionStore.all((err, session) => {
+      console.log(session);
+      sesh.push(session)
+    })
+    console.log("THING", sesh);
+
+
+
+
+
+  }
+
+
+
+  res.render("dashboard", {
+    user: req.user,
+
+  })
+})
 
 export default router;

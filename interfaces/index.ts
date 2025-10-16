@@ -1,4 +1,5 @@
 import { Strategy } from 'passport';
+import { Profile } from 'passport-github2';
 
 export interface PassportStrategy {
     name: string;
@@ -7,6 +8,7 @@ export interface PassportStrategy {
 
 declare module 'express-session' {
     interface SessionData {
-        messages?: string[]
+        messages?: string[],
+        profile?:Profile
     }
 }

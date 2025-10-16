@@ -18,6 +18,7 @@ const githubStrategy: GitHubStrategy = new GitHubStrategy(
     /* FIX ME 😭 */
     async (req: Request, accessToken: string, refreshToken: string, profile: Profile, done: any) => {
         let user = userModel.findOrCreate({ githubID: parseInt(profile.id), name: profile.displayName })
+        // req.user = user
         return done(null, user);
 
     },

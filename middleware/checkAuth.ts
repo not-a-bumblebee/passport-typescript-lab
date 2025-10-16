@@ -18,3 +18,14 @@ export const forwardAuthenticated = (req: Request, res: Response, next: NextFunc
   }
   res.redirect("/dashboard");
 }
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  console.log("IS ADMIN",req.user);
+  
+  if(req.user?.role === "admin"){
+    return next()
+    
+  }
+  res.redirect("/")
+
+}

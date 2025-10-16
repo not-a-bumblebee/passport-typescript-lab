@@ -29,7 +29,6 @@ FIX ME (types) 😭
 passport.serializeUser(function (user: User, done: callback) {
   done(null, user.id);
 });
-passport
 
 /*
 FIX ME (types) 😭
