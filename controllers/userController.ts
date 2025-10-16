@@ -1,17 +1,18 @@
-import { userModel } from "../models/userModel";
+import { User, userModel } from "../models/userModel";
 
-const getUserByEmailIdAndPassword = (email: string, password: string) => {
+const getUserByEmailIdAndPassword = (email: string, password: string): [null | User, null | string] => {
   try {
 
     let user = userModel.findOne(email);
     if (user) {
       if (isUserValid(user, password)) {
-        return user;
+        return [user, null];
       }
+      return [null, "Pasword is incorrect"]
     }
-    return null;
+    return [null, null];
   } catch (error) {
-
+    return [null, error as string]
   }
 };
 const getUserById = (id: any) => {
