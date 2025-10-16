@@ -11,7 +11,9 @@ const localStrategy = new LocalStrategy(
   },
   (email, password, done) => {
     let [user, message] = getUserByEmailIdAndPassword(email, password);
-
+    console.log("FIRE",user,message);
+    console.log("FIRE",user,message);
+    
 
     return user
       ? done(null, user)

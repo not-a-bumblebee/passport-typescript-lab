@@ -12,7 +12,9 @@ const getUserByEmailIdAndPassword = (email: string, password: string): [null | U
     }
     return [null, null];
   } catch (error) {
-    return [null, error as string]
+    //couldn't find user with email
+    const errorString = (error as Error).message;
+    return [null, errorString]
   }
 };
 const getUserById = (id: any) => {

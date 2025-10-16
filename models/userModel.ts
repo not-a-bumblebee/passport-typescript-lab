@@ -1,4 +1,4 @@
-const database = [
+const database: User[] = [
   {
     id: 1,
     name: "Jimmy Smith",
@@ -37,6 +37,17 @@ const userModel = {
     }
     throw new Error(`Couldn't find user with id: ${id}`);
   },
+  findOrCreate: (profile: User) => {
+
+    const user = database.find((user) => user.githubID === profile.githubID);
+    if (!user) {
+      let created = database.push({ githubID: profile.githubID, name: profile.name })
+      return database[created - 1]
+    }
+    return user
+
+
+  }
 };
 
 
@@ -45,6 +56,7 @@ interface User extends Express.User {
   name?: string,
   email?: string,
   password?: string,
+  githubID?: number
 }
 
 export { database, userModel, User };

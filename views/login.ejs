@@ -4,23 +4,29 @@
       <h1 class="mb-3">
         <img src="/secure-icon.png" alt="icon" width="20%" />
       </h1>
-      <%= messages[0] %>
-      <h2>Login</h2>
-      <form action="/auth/login" method="POST">
-        <div class="form-group">
-          <p>
-          </p>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-      </form>
-      <p class="mt-4">New User? <a href="/auth/register">Register</a></p>
-      <p>Forgot Password? <a href="/auth/forgot">Reset</a></p>
+      <% if (messages) {%>
+        <p style="color: red;">
+          <%= messages[0] %>
+        </p>
+        <%} %>
+          <h2>Login</h2>
+          <form action="/auth/login" method="POST">
+            <div class="form-group">
+              <p>
+              </p>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <p>OR</p>
+            <a href="/auth/github"  class="btn btn-primary btn-block" style="background-color: gray; border-color: gray;">Login with Github</a>
+          </form>
+          <p class="mt-4">New User? <a href="/auth/register">Register</a></p>
+          <p>Forgot Password? <a href="/auth/forgot">Reset</a></p>
     </div>
   </div>
 </div>

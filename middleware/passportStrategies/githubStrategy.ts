@@ -1,16 +1,26 @@
-import { Strategy as GitHubStrategy } from 'passport-github2';
+import { Strategy as GitHubStrategy, Profile } from 'passport-github2';
 import { PassportStrategy } from '../../interfaces/index';
+import { Request } from 'express';
+import { userModel } from '../../models/userModel';
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+
 
 const githubStrategy: GitHubStrategy = new GitHubStrategy(
     {
-        clientID: "",
-        clientSecret: "",
-        callbackURL: "",
+        clientID: process.env.CLIENT_ID!,
+        clientSecret: process.env.CLIENT_SECRET!,
+        callbackURL: "http://127.0.0.1:3000/auth/github/callback",
         passReqToCallback: true,
     },
-    
+
     /* FIX ME 😭 */
-    async (req: any, accessToken: any, refreshToken: any, profile: any, done: any) => {},
+    async (req: Request, accessToken: string, refreshToken: string, profile: Profile, done: any) => {
+        let user = userModel.findOrCreate({ githubID: parseInt(profile.id), name: profile.displayName })
+        return done(null, user);
+
+    },
 );
 
 const passportGitHubStrategy: PassportStrategy = {
