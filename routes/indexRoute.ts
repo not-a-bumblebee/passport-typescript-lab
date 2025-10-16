@@ -19,26 +19,30 @@ router.get("/admin", ensureAuthenticated, isAdmin, (req, res) => {
   console.log(req.user);
 
   let sesh = []
+  let filtered
 
   if (req.sessionStore) {
     req.sessionStore
     console.log("BOWSER")
-    let a = req.sessionStore.all((err, session) => {
+    let a = req.sessionStore.all?.((err, session) => {
       console.log(session);
       sesh.push(session)
     })
+
+
     console.log("THING", sesh);
 
 
-
-
-
   }
+  filtered = sesh.filter((x, i) => x.hasOwnProperty("passport"))
+  console.log("FILTERED SESSIONS: ", filtered);
 
 
 
-  res.render("dashboard", {
+  res.render("admin", {
     user: req.user,
+    sessions: filtered
+
 
   })
 })

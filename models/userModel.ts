@@ -64,8 +64,8 @@ interface User extends Express.User {
   role?: UserRole
 }
 
-declare "express-session"{
-  
-}
+// declare "express-session"{
+
+// }
 
 export { database, userModel, User };

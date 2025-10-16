@@ -1,0 +1,19 @@
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= user.name %>
+</p>
+<p>Current active sessions:</p>
+<% if (sessions) {%>
+    <% for (const [key,value] of Object.entries( sessions) ) { %>
+
+        <div class="sesh-box">
+            <p>SessionID:<%= key %>
+            </p>
+            <p>UserID:<%= value.passport.user %>
+            </p>
+            <form action="/auth/revoke/<%= key %>" method="post">
+                <button type="submit">Revoke Session</button>
+            </form>
+        </div>
+
+        <% } %>
+            <% } %>

@@ -1,6 +1,6 @@
 import express from "express";
 import passport from 'passport';
-import { forwardAuthenticated } from "../middleware/checkAuth";
+import { ensureAuthenticated, forwardAuthenticated, isAdmin } from "../middleware/checkAuth";
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get('/github/callback',
   });
 
 
-  
+
 router.post(
   "/login",
   passport.authenticate("local", {
@@ -42,5 +42,34 @@ router.get("/logout", (req, res) => {
   });
   res.redirect("/auth/login");
 });
+
+router.post("/revoke/:sessionID", ensureAuthenticated, isAdmin, (req, res) => {
+  let seshID = req.params.sessionID
+  let sesh = []
+
+  if (req.sessionStore) {
+    req.sessionStore
+    console.log("BOWSER")
+    let a = req.sessionStore.all?.((err, session) => {
+      console.log(session);
+      sesh.push(session)
+    })
+
+
+    console.log("THING", sesh);
+
+    let filtered = sesh.filter((x, i) => x.hasOwnProperty("passport"))
+    console.log("FILTERED SESSIONS: ", filtered);
+
+    req.sessionStore.destroy(seshID,(err)=>{
+      if(err){
+        console.log(err);
+      }
+
+      res.redirect("back")
+    })
+
+  }
+})
 
 export default router;
