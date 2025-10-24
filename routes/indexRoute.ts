@@ -1,4 +1,7 @@
 import express from "express";
+import { promisify } from "util"
+
+
 const router = express.Router();
 import { ensureAuthenticated, isAdmin } from "../middleware/checkAuth";
 
@@ -14,37 +17,34 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/admin", ensureAuthenticated, isAdmin, (req, res) => {
-  console.log("ADMIN");
-  console.log(req.user);
+router.get("/admin", ensureAuthenticated, isAdmin, async (req, res) => {
+
 
   let sesh = []
-  let filtered
 
-  if (req.sessionStore) {
-    req.sessionStore
-    console.log("BOWSER")
-    let a = req.sessionStore.all?.((err, session) => {
-      console.log(session);
-      sesh.push(session)
+  if (req.sessionStore.all) {
+
+    const allAsync = promisify(req.sessionStore.all.bind(req.sessionStore));
+    const sessions = await allAsync();
+
+
+    for (const [key, value] of Object.entries(sessions!)) {
+      if (value.hasOwnProperty("passport") && value.passport) {
+
+        sesh.push({ "sessionID": key, "UserID": value.passport.user })
+      }
+
+    }
+
+
+    res.render("admin", {
+      user: req.user,
+      sessions: sesh
+
+
     })
-
-
-    console.log("THING", sesh);
-
-
   }
-  filtered = sesh.filter((x, i) => x.hasOwnProperty("passport"))
-  console.log("FILTERED SESSIONS: ", filtered);
 
-
-
-  res.render("admin", {
-    user: req.user,
-    sessions: filtered
-
-
-  })
 })
 
 export default router;

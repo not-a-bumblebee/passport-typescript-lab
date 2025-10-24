@@ -11,14 +11,14 @@ const githubStrategy: GitHubStrategy = new GitHubStrategy(
     {
         clientID: process.env.CLIENT_ID!,
         clientSecret: process.env.CLIENT_SECRET!,
-        callbackURL: "http://127.0.0.1:3000/auth/github/callback",
+        callbackURL: "http://127.0.0.1:8000/auth/github/callback",
         passReqToCallback: true,
     },
 
     /* FIX ME 😭 */
-    async (req: Request, accessToken: string, refreshToken: string, profile: Profile, done: any) => {
-        let user = userModel.findOrCreate({ githubID: parseInt(profile.id), name: profile.displayName })
-        // req.user = user
+    async (req: Request, accessToken: string, refreshToken: string, profile: Profile, done: CallableFunction) => {
+        let user = userModel.findOrCreate({ id: parseInt(profile.id), name: profile.displayName || profile.username })
+
         return done(null, user);
 
     },

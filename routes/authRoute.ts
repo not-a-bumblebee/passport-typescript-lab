@@ -45,24 +45,11 @@ router.get("/logout", (req, res) => {
 
 router.post("/revoke/:sessionID", ensureAuthenticated, isAdmin, (req, res) => {
   let seshID = req.params.sessionID
-  let sesh = []
 
   if (req.sessionStore) {
-    req.sessionStore
-    console.log("BOWSER")
-    let a = req.sessionStore.all?.((err, session) => {
-      console.log(session);
-      sesh.push(session)
-    })
 
-
-    console.log("THING", sesh);
-
-    let filtered = sesh.filter((x, i) => x.hasOwnProperty("passport"))
-    console.log("FILTERED SESSIONS: ", filtered);
-
-    req.sessionStore.destroy(seshID,(err)=>{
-      if(err){
+    req.sessionStore.destroy(seshID, (err) => {
+      if (err) {
         console.log(err);
       }
 

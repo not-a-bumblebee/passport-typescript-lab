@@ -1,4 +1,5 @@
-import { User, userModel } from "../models/userModel";
+import { User } from "express-session";
+import {userModel } from "../models/userModel";
 
 const getUserByEmailIdAndPassword = (email: string, password: string): [null | User, null | string] => {
   try {
@@ -8,7 +9,7 @@ const getUserByEmailIdAndPassword = (email: string, password: string): [null | U
       if (isUserValid(user, password)) {
         return [user, null];
       }
-      console.log("Passwords ", password, user.password);
+      // console.log("Passwords ", password, user.password);
       
       return [null, "Pasword is incorrect"]
     }

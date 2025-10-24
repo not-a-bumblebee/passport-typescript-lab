@@ -1,3 +1,5 @@
+import { User } from "express-session";
+
 const database: User[] = [
   {
     id: 1,
@@ -42,9 +44,10 @@ const userModel = {
   },
   findOrCreate: (profile: User) => {
 
-    const user = database.find((user) => user.githubID === profile.githubID);
+    const user = database.find((user) => user.id === profile.id);
+
     if (!user) {
-      let created = database.push({ githubID: profile.githubID, name: profile.name, role: "user" })
+      let created = database.push({ id: profile.id, name: profile.name, role: "user" })
       return database[created - 1]
     }
     return user
@@ -53,19 +56,7 @@ const userModel = {
   }
 };
 
-type UserRole = "admin" | "user"
 
-interface User extends Express.User {
-  id?: number,
-  name?: string,
-  email?: string,
-  password?: string,
-  githubID?: number,
-  role?: UserRole
-}
+ 
 
-// declare "express-session"{
-
-// }
-
-export { database, userModel, User };
+export { database, userModel };

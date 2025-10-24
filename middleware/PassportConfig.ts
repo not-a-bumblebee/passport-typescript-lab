@@ -2,6 +2,7 @@ import passport from 'passport';
 
 import { PassportStrategy } from '../interfaces';
 
+
 export default class PassportConfig {
     /*
      FIX ME 😭
@@ -14,9 +15,9 @@ export default class PassportConfig {
      private from the outside world. This way, we can GUARANTEE that our
      passport strategies are added when this class is created. ⭐️
     */
-   constructor(strategies: PassportStrategy[]){
-    if (Array.isArray(strategies)) this.#addStrategies(strategies)
-   }
+    constructor(strategies: PassportStrategy[]) {
+        this.#addStrategies(strategies)
+    }
 
     #addStrategies(strategies: PassportStrategy[]): void {
         strategies.forEach((passportStrategy: PassportStrategy) => {

@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { getUserByEmailIdAndPassword, getUserById } from "../../controllers/userController";
 import { PassportStrategy } from '../../interfaces/index';
-import { User } from "../../models/userModel";
+import { User } from "express-session";
 
 const localStrategy = new LocalStrategy(
   {
@@ -11,9 +11,7 @@ const localStrategy = new LocalStrategy(
   },
   (email, password, done) => {
     let [user, message] = getUserByEmailIdAndPassword(email, password);
-    console.log("FIRE",user,message);
-    console.log("FIRE",user,message);
-    
+
 
     return user
       ? done(null, user)

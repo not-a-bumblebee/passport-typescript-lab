@@ -3,14 +3,14 @@
 </p>
 <p>Current active sessions:</p>
 <% if (sessions) {%>
-    <% for (const [key,value] of Object.entries( sessions) ) { %>
+    <% for (const i of sessions ) { %>
 
         <div class="sesh-box">
-            <p>SessionID:<%= key %>
+            <p>SessionID: <%= i.sessionID %>
             </p>
-            <p>UserID:<%= value.passport.user %>
+            <p>UserID: <%= i.UserID %>
             </p>
-            <form action="/auth/revoke/<%= key %>" method="post">
+            <form action="/auth/revoke/<%= i.sessionID %>" method="post">
                 <button type="submit">Revoke Session</button>
             </form>
         </div>

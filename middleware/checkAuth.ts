@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+
 /*
 FIX ME (types) 😭
 */
@@ -20,11 +21,10 @@ export const forwardAuthenticated = (req: Request, res: Response, next: NextFunc
 }
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  console.log("IS ADMIN",req.user);
-  
-  if(req.user?.role === "admin"){
+
+  if (req.user?.role === "admin") {
     return next()
-    
+
   }
   res.redirect("/")
 
